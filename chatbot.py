@@ -5,12 +5,15 @@
 # Robo will respond to your greetings
 # Robo will answer your query related to your trained data
 
-
+import sys
 import nltk
 import random
 # to process standard python strings
 import string
-
+# TF-IDF vector
+from sklearn.feature_extraction.text import TfidfVectorizer
+# for similarity between words entered by the user and the words in the corpus
+from sklearn.metrics.pairwise import cosine_similarity
 
 """
 Read sample Data
@@ -69,10 +72,6 @@ def greeting(sentence):
 """
 Generating Response
 """
-# TF-IDF vector
-from sklearn.feature_extraction.text import TfidfVectorizer
-# for similarity between words entered by the user and the words in the corpus
-from sklearn.metrics.pairwise import cosine_similarity
 
 
 def response(user_response):
@@ -97,7 +96,11 @@ print("****"*20)
 print("ROBO: Hi Robo here. I will answer your queries about Chatbots. If you want to exit, type Bye!\n")
 
 while flag:
-    user_response = input()
+    if sys.argv[1] is None:
+        user_response = input()
+    else:
+        user_response = "bye"
+
     user_response = user_response.lower()
     if user_response != 'bye':
         if user_response == 'thanks' or user_response == 'thank you':
